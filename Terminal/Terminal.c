@@ -24,7 +24,7 @@ EN_terminalError_t getTransactionDate(ST_terminalData_t *termData) //Function to
 	c[10] = '\0';
 
 	strncpy(termData->transactionDate, c, 11);
-	printf("%s\n", termData->transactionDate);
+	// printf("%s\n", termData->transactionDate);
 	
 	return TERMINAL_OK; 
 }
@@ -49,18 +49,35 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
 	strncpy(c, &(termData->transactionDate[3]), 8);
 	strncpy(&(c[3]), &(c[5]), 3);
 
+	char cardDate[3], todayDate[3];
+	strcpy(cardDate, &c[3]);
+	strcpy(todayDate, &(cardData->cardExpirationDate[3]));
 
-	//Comparing the 2 dates.
-	uint8_t compResult;
+
+	//First comparing the 2 years.
+	char compResult;
+	compResult = strncmp(cardDate, todayDate, 2);
+
+	if(compResult == -1) //If the expiry year is greater than the current year.
+		return TERMINAL_OK;
+
+	if(compResult == 1)//If the current year is greater than the expiry year.
+	{
+		printf("\tDeclined expired card!\n");
+		return EXPIRED_CARD;
+	}
+
+	//Now if the current year and the expiry year are equal, let's compare the months.
 	compResult = strncmp(c, cardData->cardExpirationDate, 5);
+
 	if (compResult == 1){
-		printf("%s", "Card is expired!\n");
+		printf("\tDeclined expired card!\n");
 		return EXPIRED_CARD;
 	}
 
 
 	// If it survived the check on the expiration date so, it's valid card.
-	printf("Card is valid!\n");
+	// printf("Card is valid!\n");
 	return TERMINAL_OK;
 }
 
@@ -107,16 +124,17 @@ void isCardExpriedTest(void) //Fucntion to check the fuction above(isCardExpired
 
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData) // This function is to get the transaction amount from the user.
 {
-	printf("Please enter the amount of transaction: ");
-	scanf("%f", &(termData->transAmount));
+	printf("\tPlease enter the amount of transaction: ");
+	scanf(" %f", &(termData->transAmount));
+	getchar();
 
 	if((termData->transAmount<=0)) // Check if the entered amount is greater than 0.
 	{
-		printf("Invalid transaction amount!\n");
+		printf("\tInvalid transaction amount!\n");
 		return INVALID_AMOUNT;
 	}
 
-	printf("The transcation amount in valid format!\n");
+	// printf("The transcation amount in valid format!\n");
 	return TERMINAL_OK;
 }
 
@@ -158,11 +176,11 @@ EN_terminalError_t setMaxAmount(ST_terminalData_t *termData, float maxAmount) //
 	termData->maxTransAmount = maxAmount;
 
 	if((termData->maxTransAmount)<=0){
-		printf("This is not a valid format for the max amount!\n");
+		printf("\tThis is not a valid format for the max amount!\n");
 		return INVALID_MAX_AMOUNT;
 	}
 
-	printf("The max amount, %.2f, is in a valid format!\n", maxAmount);
+	printf("\tPlease be noted that the max amount to withdraw is: %.2f\n", maxAmount);
 	return TERMINAL_OK;
 }
 
@@ -201,11 +219,11 @@ EN_terminalError_t isBelowMaxAmount(ST_terminalData_t *termData) //Function to c
 {
 	if((termData->transAmount)>(termData->maxTransAmount))
 	{
-		printf("Required amount exceeds the max!\n");
+		printf("\tRequired amount exceeds the max!\n");
 		return EXCEED_MAX_AMOUNT;
 	}
 
-	printf("The required amount is below the maximum allowed amount!\n");
+	// printf("The required amount is below the maximum allowed amount!\n");
 	return TERMINAL_OK;
 }
 
@@ -231,7 +249,7 @@ void isBelowMaxAmountTest(void) //Fucntion to check the fuction above(isBelowMax
 				//Expected ouput: The required amount is below the maximum allowed amount!
 				break;
 			case 2: 
-				//input: 100
+				//input: 200
 				getTransactionAmount(&termInstance);
 				isBelowMaxAmount(&termInstance);
 				//Expected ouput: Required amount exceeds the max!
@@ -266,18 +284,42 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 		}
 		accumulator += temp;
 		flag = !flag;
-		printf("%d\n", temp);
+		// printf("%d\n", temp);
 	}
 
-	printf("%d", accumulator);
+	// printf("%d", accumulator);
 
 	if(accumulator%10 ){
-		printf("Not a valid PAN!\n");
+		printf("\tNot a valid PAN!\n");
 		return INVALID_CARD;
 	}
 
-	printf("This is a valid PAN!\n");
+	// printf("This is a valid PAN!\n");
 	return TERMINAL_OK;
+}
+
+/************************************************************** Its test function *************************************************************************/
+
+void isValidCardPANTest(void){
+	ST_cardData_t CardInstance;
+
+	for(int i=0; i<2; i++){
+		switch(i){
+			case(0):
+				//Input: 8989374615436851(Valid PAN).
+				strcpy(CardInstance.primaryAccountNumber, "8989374615436851");
+				isValidCardPAN(&CardInstance);
+				break;
+				//Expected output: This is a valid PAN!
+			case(1):
+				//Input: 328574180572698990(Not valid PAN).
+				strcpy(CardInstance.primaryAccountNumber, "328574180572698990");
+				isValidCardPAN(&CardInstance);
+				break;
+				//Expected output: Not a valid PAN!
+
+		}
+	}	
 }
 
 // int main(){
@@ -287,11 +329,12 @@ EN_terminalError_t isValidCardPAN(ST_cardData_t *cardData){
 // 	// getTransactionAmountTest();
 // 	// isBelowMaxAmountTest();
 // 	// setMaxAmountTest();
+// 	isValidCardPANTest();
 
 
 // 	// ST_terminalData_t termInstance;
 
-// 	ST_cardData_t CardInstance;
-// 	getCardPAN(&CardInstance);
-// 	isValidCardPAN(&CardInstance);
+// 	// ST_cardData_t CardInstance;
+// 	// strcpy(CardInstance.primaryAccountNumber, "328574180572698990");// 8989374615436851
+// 	// isValidCardPAN(&CardInstance);
 // }

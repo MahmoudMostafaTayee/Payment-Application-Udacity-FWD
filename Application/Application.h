@@ -12,7 +12,11 @@ typedef enum {
 	START_MODULE, CARD_MODULE, TERMINAL_MODULE, SERVER_MODULE, ANOTHER_TRANSACTION, END_MODULE
 } MODULE_IDENTIFIER;
 
+
+
+void printModule(MODULE_IDENTIFIER moduleIdentifier);
 void appStart(void);
+void multiModules();
 
 #endif
 

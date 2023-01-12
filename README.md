@@ -1,5 +1,5 @@
 # Payment-Application-Udacity-FWD
-This is a payment application using the language of C.
+This is a card swipe machine mockup for payment purposes using the language of C.
 
 This project has been done while undergoing on a training is provided by The Ministry of Communications and Information Technology as a scholarship from Egypt FWD organinzation and this was provided on Udacity platform.
 

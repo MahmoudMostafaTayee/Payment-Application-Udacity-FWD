@@ -1,7 +1,9 @@
 # Payment-Application-Udacity-FWD
 This is a card swipe machine mockup for payment purposes using the language of C.
 
-This project has been done while undergoing on a training is provided by The Ministry of Communications and Information Technology as a scholarship from Egypt FWD organinzation and this was provided on Udacity platform.
+This project has been done throughout a scholarship that is provided by The Ministry of Communications and Information Technology as an internship from Egypt FWD organinzation and it was provided through Udacity platform.
+
+### Project flowchart:
 
 ![](https://github.com/MahmoudMostafaTayee/Payment-Application-Udacity-FWD/blob/main/Flowchart.png)
 

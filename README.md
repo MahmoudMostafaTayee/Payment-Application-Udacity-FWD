@@ -1,12 +1,33 @@
-# Payment-Application-Udacity-FWD
-This is a card swipe machine mockup for payment purposes using the language of C.
+# 💳 Payment Application – Udacity/FWD Embedded Systems Project
 
-This project has been done throughout a scholarship that is provided by The Ministry of Communications and Information Technology as an internship from Egypt FWD organinzation and it was provided through Udacity platform.
+This project simulates a **card payment terminal** using **C programming**, developed as part of the *Embedded Systems Professional Nanodegree* scholarship provided by the **Egypt Ministry of Communications and Information Technology (MCIT)** in collaboration with **Udacity** under the **FWD (Future Work is Digital)** initiative.
 
-### Project flowchart:
+It mimics the core functionality of a real-world card swipe machine, processing transaction data, verifying card and terminal information, and handling basic payment authorization logic — all in pure C on a simulated embedded-like environment.
+
+---
+
+## 📌 Features
+
+- 🧾 Card data collection (cardholder name, PAN, expiration date)
+- 📆 Terminal validation (expiry date check, transaction amount check, maximum limit)
+- ✅ Transaction approval logic
+- 🧪 Modular functions to test and validate each component of the payment process
+- 🧼 Clean separation between terminal, server, and card modules
+
+---
+
+## 📊 Project Flowchart
 
 ![](https://github.com/MahmoudMostafaTayee/Payment-Application-Udacity-FWD/blob/main/Flowchart.png)
 
-Link to the scholarship website:
+---
 
-https://egfwd.com/?utm_source=googlesearch&utm_medium=ads&utm_campaign=branding&utm_adgroup=fwd&gclid=EAIaIQobChMI_oqt75i2-gIVDf93Ch3JsAHBEAAYASAAEgL4iPD_BwE
+## 📚 Scholarship Context
+
+This project was completed as part of the Udacity Embedded Systems Nanodegree funded by the **Egypt FWD** initiative. The program provided a hands-on learning experience on:
+
+- C Programming
+- Data Structures and Algorithms
+- Hardware Interfacing & Peripherals
+- Software Design Patterns in Embedded Systems
+
